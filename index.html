@@ -103,10 +103,9 @@ html body textarea,html body input{cursor:url("data:image/svg+xml,%3Csvg%20xmlns
 <script>
 if('scrollRestoration' in history)history.scrollRestoration='manual';scrollTo(0,0);
 const $=s=>document.querySelector(s);
-
 /* =====================================================================
-EDIT ME — this is the only part of the code you need to touch
-===================================================================== */
+   EDIT ME — this is the only part of the code you need to touch
+   ===================================================================== */
 
 // Where your files are.
 // Leave '' if you paste full links (https://...) below,
@@ -118,19 +117,19 @@ const BASE='';
    To fill a tile, put its clip (.mp4) or photo (.jpg / .png / .webp)
    between the quotes next to that number. Leave "" to keep the numbered placeholder. */
 const LANDING={
-   1: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Sound-02.mp4",
-   2: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-01.mp4",
-   3: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Sound-01.mp4",
-   4: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Burial-02.mp4",
-   5: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Bond-01.mp4",
-   6: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-03.mp4",
-   7: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-02.mp4",
-   8: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-04.mp4",
-   9: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Burial-01.mp4",
-  10: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-01.mp4",
-  11: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-02.mp4",
-  12: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-01.mp4",
-  13: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Manchester-02.mp4"
+   1: "",
+   2: "",
+   3: "",
+   4: "",
+   5: "",
+   6: "",
+   7: "",
+   8: "",
+   9: "",
+  10: "",
+  11: "",
+  12: "",
+  13: ""
 };
 
 /* ---------- 2. THE ARCHIVE ----------
@@ -153,18 +152,10 @@ const LANDING={
 const ARCHIVE={
 
  "Cinematography":[
-   { name:"Bond Student Film", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Bond-01.mp4", year:"2025"},
-   { name:"Experimental Fashion Film", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-01.mp4", year:"2025"},
-   { name:"Edenhxya Music Video", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-01.mp4", year:"2026"},
   // COPY ME →  { name:"Project name", clip:"link-to-looping-clip.mp4" },
  ],
 
  "Music":[
-   { name:"Edednhxya Music Video", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-01.mp4", year:"2026"},
-   { name:"Manchester Carnival", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-02.mp4", year:"2026"},
-   { name:"Drummer", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Drummer-01.mp4", year:"2024"},
-   { name:"Manchester", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Manchester-02.mp4", year:"2025"},
-
   // COPY ME →  { name:"Project name", clip:"link-to-looping-clip.mp4" },
  ],
 
@@ -247,6 +238,12 @@ function closePage(){$('#page').classList.remove('on')}
 addEventListener('keydown',e=>e.key==='Escape'&&closePage());
 const tiles=[[1,1,2,2],[3,1,1,1],[4,1,1,2],[5,1,2,1],[3,2,1,1],[5,2,1,1],[6,2,1,2],[1,3,1,2],[2,3,2,1],[4,3,2,2],[2,4,1,1],[3,4,1,1],[6,4,1,1]];
 $('#collage').innerHTML=tiles.map((t,i)=>{const n=i+1,f=LANDING[n];return `<div class="tile" style="grid-column:${t[0]}/span ${t[2]};grid-row:${t[1]}/span ${t[3]}">${f?(/\.(mp4|webm|mov)$/i.test(f)?`<video src="${U(f)}" autoplay muted loop playsinline></video>`:`<img src="${U(f)}" alt="">`):`<div class="art" style="background:${art('tile'+n,i%3)}"></div><b class="num">${String(n).padStart(2,'0')}</b>`}</div>`}).join('');
+/* mobile: make sure landing clips start (set muted/inline in JS, retry on first touch) */
+{const tv=[...document.querySelectorAll('#collage video')];
+ const kick=()=>tv.forEach(v=>{if(v.paused)v.play().catch(()=>{})});
+ tv.forEach(v=>{v.muted=true;v.defaultMuted=true;v.setAttribute('muted','');v.playsInline=true;v.setAttribute('playsinline','');v.loop=true;v.addEventListener('canplay',()=>v.play().catch(()=>{}),{once:true})});
+ kick();['touchstart','scroll','click'].forEach(e=>addEventListener(e,kick,{passive:true,once:true}));
+ document.addEventListener('visibilitychange',kick)}
 const h1=$('#hero h1'),hero=$('#hero'),nz=$('#noise'),fs=$('#fs');
 let nzOn=false;
 let Hfs=0;function sizeDoc(){Hfs=fs.scrollHeight;document.body.style.height=(innerHeight*.95+Hfs)+'px'}
