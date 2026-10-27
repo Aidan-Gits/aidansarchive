@@ -103,9 +103,10 @@ html body textarea,html body input{cursor:url("data:image/svg+xml,%3Csvg%20xmlns
 <script>
 if('scrollRestoration' in history)history.scrollRestoration='manual';scrollTo(0,0);
 const $=s=>document.querySelector(s);
+
 /* =====================================================================
-   EDIT ME — this is the only part of the code you need to touch
-   ===================================================================== */
+EDIT ME — this is the only part of the code you need to touch
+===================================================================== */
 
 // Where your files are.
 // Leave '' if you paste full links (https://...) below,
@@ -117,19 +118,19 @@ const BASE='';
    To fill a tile, put its clip (.mp4) or photo (.jpg / .png / .webp)
    between the quotes next to that number. Leave "" to keep the numbered placeholder. */
 const LANDING={
-   1: "",
-   2: "",
-   3: "",
-   4: "",
-   5: "",
-   6: "",
-   7: "",
-   8: "",
-   9: "",
-  10: "",
-  11: "",
-  12: "",
-  13: ""
+   1: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Sound-02.mp4",
+   2: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-01.mp4",
+   3: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Sound-01.mp4",
+   4: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Burial-02.mp4",
+   5: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Bond-01.mp4",
+   6: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-03.mp4",
+   7: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-02.mp4",
+   8: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-04.mp4",
+   9: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Burial-01.mp4",
+  10: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-01.mp4",
+  11: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-02.mp4",
+  12: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-01.mp4",
+  13: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Manchester-02.mp4"
 };
 
 /* ---------- 2. THE ARCHIVE ----------
@@ -152,10 +153,18 @@ const LANDING={
 const ARCHIVE={
 
  "Cinematography":[
+   { name:"Bond Student Film", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Bond-01.mp4", year:"2025"},
+   { name:"Experimental Fashion Film", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-01.mp4", year:"2025"},
+   { name:"Edenhxya Music Video", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-01.mp4", year:"2026"},
   // COPY ME →  { name:"Project name", clip:"link-to-looping-clip.mp4" },
  ],
 
  "Music":[
+   { name:"Edednhxya Music Video", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-01.mp4", year:"2026"},
+   { name:"Manchester Carnival", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-02.mp4", year:"2026"},
+   { name:"Drummer", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Drummer-01.mp4", year:"2024"},
+   { name:"Manchester", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Manchester-02.mp4", year:"2025"},
+
   // COPY ME →  { name:"Project name", clip:"link-to-looping-clip.mp4" },
  ],
 
