@@ -75,6 +75,10 @@ body{-webkit-font-smoothing:antialiased;letter-spacing:.01em}
 #vig,.corner,.scan,.hud,.pv::after,.ph::after,.tile::after{display:none!important}
 .tile,.pv{background:#000;min-width:0;min-height:0}
 .tile video,.tile img,.pv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* orange cursor (#FF5C00) */
+html,html *{cursor:url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2724%27%20height=%2724%27%20viewBox=%270%200%2024%2024%27%3E%3Cpath%20d=%27M3%202%20L3%2019%20L7.5%2014.8%20L10.7%2022%20L13.4%2020.8%20L10.2%2013.7%20L16.2%2013.7%20Z%27%20fill=%27%23FF5C00%27%20stroke=%27%23000%27%20stroke-width=%271%27%20stroke-linejoin=%27round%27/%3E%3C/svg%3E") 3 2,auto!important}
+html body a,html body button,html body .tab,html body .list li.go,html body [onclick],html body #send{cursor:url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2724%27%20height=%2724%27%20viewBox=%270%200%2024%2024%27%3E%3Cpath%20d=%27M8.5%203.5%20Q8.5%202%2010%202%20Q11.5%202%2011.5%203.5%20L11.5%209.5%20L12%209.2%20Q12.6%208.6%2013.4%208.8%20Q14.2%209%2014.5%209.8%20Q15%209.3%2015.8%209.5%20Q16.6%209.7%2016.9%2010.5%20Q17.5%2010.1%2018.3%2010.4%20Q19.2%2010.8%2019.2%2011.8%20L19%2016.5%20Q18.8%2020%2015.5%2021%20L11%2021%20Q9.5%2021%208.5%2019.8%20L4.7%2014.2%20Q4.2%2013.4%204.8%2012.8%20Q5.5%2012.2%206.3%2012.6%20L8.5%2014.2%20Z%27%20fill=%27%23FF5C00%27%20stroke=%27%23000%27%20stroke-width=%271%27%20stroke-linejoin=%27round%27/%3E%3C/svg%3E") 10 2,pointer!important}
+html body textarea,html body input{cursor:url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2724%27%20height=%2724%27%20viewBox=%270%200%2024%2024%27%3E%3Cpath%20d=%27M8%203h8M12%203v18M8%2021h8%27%20stroke=%27%23000%27%20stroke-width=%274%27%20stroke-linecap=%27round%27%20fill=%27none%27/%3E%3Cpath%20d=%27M8%203h8M12%203v18M8%2021h8%27%20stroke=%27%23FF5C00%27%20stroke-width=%272%27%20stroke-linecap=%27round%27%20fill=%27none%27/%3E%3C/svg%3E") 12 12,text!important}
 </style>
 </head>
 <body>
@@ -113,19 +117,19 @@ const BASE='';
    To fill a tile, put its clip (.mp4) or photo (.jpg / .png / .webp)
    between the quotes next to that number. Leave "" to keep the numbered placeholder. */
 const LANDING={
-   1: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Sound-02.mp4",
-   2: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-01.mp4",
-   3: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Sound-01.mp4",
-   4: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Burial-02.mp4",
-   5: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Bond-01.mp4",
-   6: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-03.mp4",
-   7: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-02.mp4",
-   8: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-04.mp4",
-   9: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Burial-01.mp4",
-  10: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-01.mp4",
-  11: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-02.mp4",
-  12: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-01.mp4",
-  13: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Manchester-02.mp4"
+   1: "",
+   2: "",
+   3: "",
+   4: "",
+   5: "",
+   6: "",
+   7: "",
+   8: "",
+   9: "",
+  10: "",
+  11: "",
+  12: "",
+  13: ""
 };
 
 /* ---------- 2. THE ARCHIVE ----------
@@ -148,18 +152,10 @@ const LANDING={
 const ARCHIVE={
 
  "Cinematography":[
-   { name:"Bond Student Film", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Bond-01.mp4", year:"2025"},
-   { name:"Experimental Fashion Film", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-01.mp4", year:"2025"},
-   { name:"Edenhxya Music Video", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-01.mp4", year:"2026"},
   // COPY ME →  { name:"Project name", clip:"link-to-looping-clip.mp4" },
  ],
 
  "Music":[
-   { name:"Edednhxya Music Video", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-01.mp4", year:"2026"},
-   { name:"Manchester Carnival", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-02.mp4", year:"2026"},
-   { name:"Drummer", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Drummer-01.mp4", year:"2024"},
-   { name:"Manchester", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Manchester-02.mp4", year:"2025"},
-
   // COPY ME →  { name:"Project name", clip:"link-to-looping-clip.mp4" },
  ],
 
