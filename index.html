@@ -97,6 +97,7 @@ body{-webkit-font-smoothing:antialiased;letter-spacing:.01em}
 <canvas id="noise"></canvas>
 <div id="page"></div>
 <script>
+if('scrollRestoration' in history)history.scrollRestoration='manual';scrollTo(0,0);
 const $=s=>document.querySelector(s);
 /* =====================================================================
    EDIT ME — this is the only part of the code you need to touch
@@ -112,19 +113,19 @@ const BASE='';
    To fill a tile, put its clip (.mp4) or photo (.jpg / .png / .webp)
    between the quotes next to that number. Leave "" to keep the numbered placeholder. */
 const LANDING={
-   1: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Sound-02.mp4",
-   2: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-01.mp4",
-   3: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Sound-01.mp4",
-   4: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Burial-02.mp4",
-   5: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Bond-01.mp4",
-   6: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-03.mp4",
-   7: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-02.mp4",
-   8: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-04.mp4",
-   9: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Burial-01.mp4",
-  10: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-01.mp4",
-  11: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-02.mp4",
-  12: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-01.mp4",
-  13: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Manchester-02.mp4"
+   1: "",
+   2: "",
+   3: "",
+   4: "",
+   5: "",
+   6: "",
+   7: "",
+   8: "",
+   9: "",
+  10: "",
+  11: "",
+  12: "",
+  13: ""
 };
 
 /* ---------- 2. THE ARCHIVE ----------
@@ -147,18 +148,10 @@ const LANDING={
 const ARCHIVE={
 
  "Cinematography":[
-   { name:"Bond Student Film", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Bond-01.mp4" },
-   { name:"Experimental Fashion Film", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-01.mp4" },
-   { name:"Edenhxya Music Video", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-01.mp4" },
   // COPY ME →  { name:"Project name", clip:"link-to-looping-clip.mp4" },
  ],
 
  "Music":[
-   { name:"Edednhxya Music Video", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-01.mp4" },
-   { name:"Manchester Carnival", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-02.mp4" },
-   { name:"Drummer", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Drummer-01.mp4" },
-   { name:"Manchester", clip:"https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Manchester-02.mp4" },
-
   // COPY ME →  { name:"Project name", clip:"link-to-looping-clip.mp4" },
  ],
 
@@ -197,7 +190,7 @@ d.querySelector('.tab').onclick=()=>{
 const was=d.classList.contains('open');
 document.querySelectorAll('.drawer').forEach(x=>x.classList.remove('open'));
 cab.classList.toggle('has-open',!was);requestAnimationFrame(layout);
-if(!was){d.classList.add('open');const f=ul.querySelector('li[data-k]');if(f)show(f,items[+f.dataset.k],pv,ul)}
+if(!was){d.classList.add('open');items.forEach(x=>x[4]&&x[4].preview&&vid(pv,x[4]));const f=ul.querySelector('li[data-k]');if(f)show(f,items[+f.dataset.k],pv,ul)}
 };
 cab.appendChild(d);
 });
@@ -205,14 +198,17 @@ function layout(){const H=Math.max(150,cab.clientHeight-4*41-58);cab.style.setPr
 addEventListener('resize',layout);
 const arch=document.createElement('div');arch.className='arch';
 arch.innerHTML='<div>the archive<small>about · contact · full index</small></div>';cab.appendChild(arch);
+function vid(pv,m){pv._v=pv._v||{};let v=pv._v[m.preview];if(!v){v=pv._v[m.preview]=document.createElement('video');v.muted=v.loop=v.playsInline=true;v.preload='auto';v.poster=U(m.poster);v.src=U(m.preview);v.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0';pv.querySelector('.art').after(v)}return v}
 function show(li,it,pv,ul){
 ul.querySelectorAll('li').forEach(x=>x.classList.remove('sel'));li.classList.add('sel');
 /* PROTOTYPE: swap the gradient for a <video src="..." autoplay muted loop> here */
-pv.querySelector('.art').style.background=art(it[0]);
- {const m=it[4]||{};let v=pv.querySelector('video');
-  if(m.preview){if(!v){v=document.createElement('video');v.muted=v.loop=v.playsInline=v.autoplay=true;v.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover';pv.querySelector('.art').after(v)}
-   v.style.display='';if(v.dataset.s!==m.preview){v.dataset.s=m.preview;v.poster=U(m.poster);v.src=U(m.preview);v.play().catch(()=>{})}}
-  else if(v){v.pause();v.style.display='none'}}
+{const m=it[4]||{},bg=pv.querySelector('.art');
+  pv.querySelectorAll('video').forEach(x=>{x.style.opacity=0;x.pause()});
+  if(m.preview){bg.style.background='#000';const v=vid(pv,m);pv._cur=m.preview;
+   if(m.poster)v.style.opacity=1;
+   const go=()=>{if(pv._cur===m.preview){v.style.opacity=1;v.currentTime=0;v.play().catch(()=>{})}};
+   v.readyState>=2?go():v.addEventListener('loadeddata',go,{once:true})}
+  else{pv._cur='';bg.style.background=art(it[0])}}
 pv.querySelector('.tl').textContent=(it[1]||'').toUpperCase();
 pv.querySelector('.bl').textContent=(it[0]+(it[2]?' / '+it[2]:'')).toUpperCase();
 pv.querySelector('.br').textContent=it[3]?'CLICK TO OPEN ↗':'';
