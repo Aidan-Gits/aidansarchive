@@ -70,6 +70,7 @@ body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;bac
 .ab2 #send{transition:background .12s,color .12s}
 .ph video,.ph iframe,.ph img,.tile video,.tile img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
 .ph video{object-fit:contain;background:#000;z-index:4}.ph iframe{z-index:4}
+.tile .num{position:absolute;inset:0;z-index:2;display:grid;place-items:center;font:700 clamp(26px,4.5vw,64px) var(--mono)}
 </style>
 </head>
 <body>
@@ -93,26 +94,76 @@ body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;bac
 <div id="page"></div>
 <script>
 const $=s=>document.querySelector(s);
-/* ===== MEDIA SETUP =====
-   BASE = where your files live (folder like './media/' or a URL like 'https://media.yourdomain.com/').
-   Anything below that starts with http(s):// is used as-is. */
+/* =====================================================================
+   EDIT ME — this is the only part of the code you need to touch
+   ===================================================================== */
+
+// Where your files are.
+// Leave '' if you paste full links (https://...) below,
+// or use a folder next to this file, e.g. './media/' and then write just the filenames.
 const BASE='';
-const U=f=>!f?'':/^(https?:)?\/\//.test(f)?f:BASE+f;
-/* ===== CONTENT — edit me =====
-   [name, type, year, clickable?, {options}]  — options are all optional:
-   preview:"clip.mp4"  short muted looping clip shown in the folder preview
-   poster:"clip.jpg"   still shown while the clip loads
-   video:"full.mp4"    full video on the project page (or use embed:)
-   embed:"https://player.vimeo.com/video/123456"  Vimeo/YouTube embed for the project page
-   stills:["a.jpg","b.jpg"]  photos on the project page
-   page:"https://..."  open this link instead of the built-in project page (e.g. a Readymag page)
-   e.g. ["Night Shift","short film",2026,1,{preview:"night-shift.mp4",poster:"night-shift.jpg",embed:"https://player.vimeo.com/video/123456",stills:["ns1.jpg","ns2.jpg"]}] */
-const DATA={
-"Cinematography":[["Night Shift","short film",2026,1],["Salt Flats","doc",2025,1],["Glass Hours","music film",2025,1],["Untitled 04","test reel",2024,0],["Low Tide","short film",2024,1],["Client — Redacted","commercial",2023,0]],
-"Music":[["Project 01","music video",2026,1],["Project 02","live visuals",2026,1],["Project 03","music video",2025,0],["Project 04","tour film",2025,1],["Project 05","visualiser",2025,1],["Project 06","teaser",2024,0],["Project 07","music video",2024,1]],
-"Social Media":[["Launch Campaign","reels",2026,1],["Studio Series","short-form",2025,1],["Brand Takeover","stories",2025,0],["Event Recap","reels",2024,1]],
-"Post Production":[["Colour — Night Shift","grade",2026,1],["VFX Cleanup","comp",2025,0],["Sound Pass","mix",2025,1],["Edit — Salt Flats","edit",2024,1],["Motion Titles","motion",2024,1]]
+
+/* ---------- 1. LANDING PAGE ----------
+   Every tile on the landing page shows its number (01 to 13).
+   To fill a tile, put its clip (.mp4) or photo (.jpg / .png / .webp)
+   between the quotes next to that number. Leave "" to keep the numbered placeholder. */
+const LANDING={
+   1: "",
+   2: "",
+   3: "",
+   4: "",
+   5: "",
+   6: "",
+   7: "",
+   8: "",
+   9: "",
+  10: "",
+  11: "",
+  12: "",
+  13: ""
 };
+
+/* ---------- 2. THE ARCHIVE ----------
+   Each section below is one folder tab. Nothing is filled in yet.
+   To add a project: copy the COPY ME line, paste it inside the [ ] of the section
+   you want (remove the // at the start), and fill in the two parts:
+        name = the project name shown in the list
+        clip = the link (or filename) of the short looping preview clip (.mp4)
+   Make sure every project line ends with a comma.
+
+   OPTIONAL extras — add any of these inside the { } if you want them:
+        year:"2026"                 shows a date on the right of the list
+        poster:"photo.jpg"          image shown while the clip loads
+        page:"https://..."          makes the project clickable (arrow) and opens this link
+        embed:"https://player.vimeo.com/video/123456"
+                                    makes it clickable and opens a project page with this video
+        video:"full.mp4"            same, using your own video file instead
+        stills:["a.jpg","b.jpg"]    photos on that project page
+   You can rename the section names (Cinematography, Music, ...) freely. */
+const ARCHIVE={
+
+ "Cinematography":[
+  // COPY ME →  { name:"Project name", clip:"link-to-looping-clip.mp4" },
+ ],
+
+ "Music":[
+  // COPY ME →  { name:"Project name", clip:"link-to-looping-clip.mp4" },
+ ],
+
+ "Social Media":[
+  // COPY ME →  { name:"Project name", clip:"link-to-looping-clip.mp4" },
+ ],
+
+ "Post Production":[
+  // COPY ME →  { name:"Project name", clip:"link-to-looping-clip.mp4" },
+ ]
+
+};
+/* ===================== END OF EDIT ME ===================== */
+
+const U=f=>!f?'':/^(https?:)?\/\//.test(f)?f:BASE+f;
+const DATA={};
+Object.entries(ARCHIVE).forEach(([c,l])=>{DATA[c]=l.map(p=>[p.name||'untitled',p.type||'',p.year||'',(p.page||p.embed||p.video||p.stills)?1:0,{preview:p.clip,poster:p.poster,video:p.video,embed:p.embed,stills:p.stills,page:p.page}])});
 const hue=(s)=>[...s].reduce((a,c)=>a*31+c.charCodeAt(0),7)%360;
 const art=(n,a=0)=>{const h=hue(n);return `radial-gradient(circle at ${30+a*20}% ${40+a*10}%,hsl(${h} 80% 55%),transparent 55%),radial-gradient(circle at ${75-a*15}% 70%,hsl(${(h+70)%360} 70% 35%),transparent 60%),linear-gradient(${120+a*40}deg,#050505,hsl(${h} 30% 12%))`};
 const cab=$('#cab');let n=0,tick;
@@ -122,8 +173,9 @@ d.innerHTML=`<div class="tabrow"><button class="tab" style="--i:${i}"><span clas
 <div class="face"><div class="body"><div class="in"><div><ul class="list"></ul></div>
 <div class="pv"><div class="art"></div><div class="scan"></div><div class="hud tl"></div><div class="hud tr">● PREVIEW</div><div class="hud bl"></div><div class="hud br"></div><div class="t"></div></div></div></div></div>`;
 const ul=d.querySelector('.list'),pv=d.querySelector('.pv');
+if(!items.length){ul.innerHTML='<li><span></span><span>no projects yet</span><span></span></li>';pv.querySelector('.t').textContent='add a project in the code'}
 items.forEach((it,k)=>{
-const li=document.createElement('li');li.className=it[3]?'go':'no';
+const li=document.createElement('li');li.className=it[3]?'go':'no';li.dataset.k=k;
 li.innerHTML=`<span class="i">${String(k+1).padStart(2,'0')}</span><span>${it[0]}${it[3]?'<span class="ar">↗</span>':''}</span><span class="y">${it[2]}</span>`;
 li.onmouseenter=()=>show(li,it,pv,ul);
 li.onclick=()=>it[3]&&(it[4]&&it[4].page?window.open(it[4].page,'_blank'):openPage(cat,it));
@@ -133,7 +185,7 @@ d.querySelector('.tab').onclick=()=>{
 const was=d.classList.contains('open');
 document.querySelectorAll('.drawer').forEach(x=>x.classList.remove('open'));
 cab.classList.toggle('has-open',!was);requestAnimationFrame(layout);
-if(!was){d.classList.add('open');const f=ul.querySelector('.go');if(f)show(f,items[[...ul.children].indexOf(f)],pv,ul)}
+if(!was){d.classList.add('open');const f=ul.querySelector('li[data-k]');if(f)show(f,items[+f.dataset.k],pv,ul)}
 };
 cab.appendChild(d);
 });
@@ -150,7 +202,7 @@ pv.querySelector('.art').style.background=art(it[0]);
    v.style.display='';if(v.dataset.s!==m.preview){v.dataset.s=m.preview;v.poster=U(m.poster);v.src=U(m.preview);v.play().catch(()=>{})}}
   else if(v){v.pause();v.style.display='none'}}
 pv.querySelector('.tl').textContent=(it[1]||'').toUpperCase();
-pv.querySelector('.bl').textContent=it[0].toUpperCase()+' / '+it[2];
+pv.querySelector('.bl').textContent=(it[0]+(it[2]?' / '+it[2]:'')).toUpperCase();
 pv.querySelector('.br').textContent=it[3]?'CLICK TO OPEN ↗':'';
 }
 setInterval(()=>{$('#clock').textContent=new Date().toISOString().slice(11,19)+' UTC'},1000);
@@ -172,8 +224,8 @@ p.scrollTop=0;p.classList.add('on');
 }
 function closePage(){$('#page').classList.remove('on')}
 addEventListener('keydown',e=>e.key==='Escape'&&closePage());
-const tiles=[[1,1,2,2,"CAM_A_014.mov"],[3,1,1,1,"IMG_2291.jpg"],[4,1,1,2,"REEL_03.mov"],[5,1,2,1,"IMG_0412.jpg"],[3,2,1,1,"BTS_009.mov"],[5,2,1,1,"LIVE_SET.mov"],[6,2,1,2,"IMG_1180.jpg"],[1,3,1,2,"GRADE_02.mov"],[2,3,2,1,"MV_CUT_5.mov"],[4,3,2,2,"REEL_07.mov"],[2,4,1,1,"IMG_3350.jpg"],[3,4,1,1,"IMG_0077.jpg"],[6,4,1,1,"CAM_B_201.mov"]];
-$('#collage').innerHTML=tiles.map((t,i)=>`<div class="tile" style="grid-column:${t[0]}/span ${t[2]};grid-row:${t[1]}/span ${t[3]}">${t[5]?(/\.(mp4|webm|mov)$/i.test(t[5])?`<video src="${U(t[5])}" autoplay muted loop playsinline></video>`:`<img src="${U(t[5])}" alt="">`):`<div class="art" style="background:${art(t[4],i%3)}"></div>`}<i>${t[4]}</i></div>`).join('');
+const tiles=[[1,1,2,2],[3,1,1,1],[4,1,1,2],[5,1,2,1],[3,2,1,1],[5,2,1,1],[6,2,1,2],[1,3,1,2],[2,3,2,1],[4,3,2,2],[2,4,1,1],[3,4,1,1],[6,4,1,1]];
+$('#collage').innerHTML=tiles.map((t,i)=>{const n=i+1,f=LANDING[n];return `<div class="tile" style="grid-column:${t[0]}/span ${t[2]};grid-row:${t[1]}/span ${t[3]}">${f?(/\.(mp4|webm|mov)$/i.test(f)?`<video src="${U(f)}" autoplay muted loop playsinline></video>`:`<img src="${U(f)}" alt="">`):`<div class="art" style="background:${art('tile'+n,i%3)}"></div><b class="num">${String(n).padStart(2,'0')}</b>`}</div>`}).join('');
 const h1=$('#hero h1'),hero=$('#hero'),nz=$('#noise'),fs=$('#fs');
 let nzOn=false;
 let Hfs=0;function sizeDoc(){Hfs=fs.scrollHeight;document.body.style.height=(innerHeight*.95+Hfs)+'px'}
