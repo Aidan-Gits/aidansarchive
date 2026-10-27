@@ -49,7 +49,7 @@
 .cab::before,.cab::after{content:"";position:absolute;top:40px;bottom:0;width:1px;background:#fff;z-index:1;pointer-events:none}
 .cab::before{left:0}.cab::after{right:0}
 body{text-shadow:0 0 3px rgba(255,255,255,.5),0 0 9px rgba(255,255,255,.2)}
-#brand h1{text-shadow:0 0 4px rgba(255,255,255,.6),0 0 16px rgba(255,255,255,.3),0 0 40px rgba(255,255,255,.12)}
+#brand h1{text-shadow:0 0 4px rgba(255,255,255,.6),0 0 16px rgba(255,255,255,.3),0 0 40px rgba(255,255,255,.12),0 2px 30px rgba(0,0,0,.55)}
 .list li.go:hover,.list li.go.sel,#page button:hover,.ab2 a:hover{text-shadow:none}
 body{-webkit-font-smoothing:antialiased;letter-spacing:.01em}
 ::selection{background:#fff;color:#000;text-shadow:none}
@@ -71,6 +71,10 @@ body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;bac
 .ph video,.ph iframe,.ph img,.tile video,.tile img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
 .ph video{object-fit:contain;background:#000;z-index:4}.ph iframe{z-index:4}
 .tile .num{position:absolute;inset:0;z-index:2;display:grid;place-items:center;font:700 clamp(26px,4.5vw,64px) var(--mono)}
+/* clean clips: nothing layered over or behind them */
+#vig,.corner,.scan,.hud,.pv::after,.ph::after,.tile::after{display:none!important}
+.tile,.pv{background:#000;min-width:0;min-height:0}
+.tile video,.tile img,.pv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 <body>
@@ -108,19 +112,19 @@ const BASE='';
    To fill a tile, put its clip (.mp4) or photo (.jpg / .png / .webp)
    between the quotes next to that number. Leave "" to keep the numbered placeholder. */
 const LANDING={
-   1: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Sound-02.mp4",
-   2: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-01.mp4",
-   3: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Sound-01.mp4",
-   4: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Burial-02.mp4",
-   5: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Bond-01.mp4",
-   6: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-03.mp4",
-   7: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-02.mp4",
-   8: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-04.mp4",
-   9: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Burial-01.mp4",
-  10: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Experimental-01.mp4",
-  11: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Eden-02.mp4",
-  12: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Carnival-01.mp4",
-  13: "https://pub-8366b99a257d4184a0d83115fda7334f.r2.dev/videos/Manchester-02.mp4"
+   1: "",
+   2: "",
+   3: "",
+   4: "",
+   5: "",
+   6: "",
+   7: "",
+   8: "",
+   9: "",
+  10: "",
+  11: "",
+  12: "",
+  13: ""
 };
 
 /* ---------- 2. THE ARCHIVE ----------
